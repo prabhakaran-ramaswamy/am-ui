@@ -1,35 +1,53 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-import {Navbar, Nav, Container, Row, Col, Jumbotron, NavItem} from 'react-bootstrap';
+  NavLink
+} from 'react-router-dom';
+import {
+  Navbar,
+  Nav,
+  Container,
+  Row,
+  Col,
+  Jumbotron
+} from 'react-bootstrap';
 
-const NavigationBar = () => (
-  <Router>
-    <Jumbotron fluid>
-      <Container>
-        <h1>Asset Management</h1>
-        <p />
-        <Row>
-          <Col>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-              <Navbar.Brand > <Link to="/">Users</Link></Navbar.Brand>
-              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-              <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav pullRight>
-                  <Nav.Link href="#"><Link to="/asset">Asset</Link></Nav.Link>
-                  <Nav.Link href="asset-management">Asset Management</Nav.Link>
-                </Nav>
-              </Navbar.Collapse>
-            </Navbar>
-          </Col>
-        </Row>
-      </Container>
-    </Jumbotron>
-  </Router>
-);
+class NavigationBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div>
+      <Jumbotron fluid style={{"margin-bottom": ":0px"}}>
+        <Container>
+          <h1>Asset Management</h1>
+          <Row>
+            <Col>
+              <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{"margin-bottom": ":0px"}}>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav pullRight>
+                    <Nav.Link as={NavLink} to="/users" exact>
+                      Users
+                    </Nav.Link>
+                    <Nav.Link as={NavLink} to="/assets" exact>
+                      Asset
+                    </Nav.Link>
+                    <Nav.Link as={NavLink} to="/asset-user-list" exact>
+                      Asset Management
+                    </Nav.Link>
+                  </Nav>
+                </Navbar.Collapse>
+              </Navbar>
+            </Col>
+          </Row>
+        </Container>
+      </Jumbotron>
+      </div>
+    );
+  }
+}
 
 export default NavigationBar;

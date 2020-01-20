@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 class AssetManagementCreate extends React.Component {
   constructor(props) {

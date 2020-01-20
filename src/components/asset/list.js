@@ -1,51 +1,70 @@
-import React, {Component} from 'react';
-import {Table,Navbar, Nav, Container, Row, Col, Jumbotron, NavItem} from 'react-bootstrap';
-
+import React from 'react';
+import {
+  Table,
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
 
 class AssetList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state={"assets":[{id:"1",description:"",assertNumber:"",serial:"",taggedTo:"",status:""}]};
+  constructor(props) {
+    super(props);
+    this.state = {
+      assets: [
+        {
+          id: '1',
+          description: '',
+          assertNumber: '',
+          serial: '',
+          taggedTo: '',
+          status: '',
+        },
+      ],
+    };
+  }
 
-      }
+  renderTableData() {
+    return this.state.assets.map((asset, index) => {
+      const {id, description, assertNumber, serial, status} = asset;
+      return (
+        <tr key={index}>
+          <td>{id}</td>
+          <td>{description}</td>
+          <td>{assertNumber}</td>
+          <td>{serial}</td>
+          <td>{status}</td>
+        </tr>
+      );
+    });
+  }
 
-      renderTableData() {
-        return this.state.assets.map((user, index) => {
-           const {id, description, assertNumber, serial, taggedTo, status} = user
-           return (
-              <tr key={id}>
-                 <td>{id}</td>
-                 <td>{description}</td>
-                 <td>{assertNumber}</td>
-                 <td>{serial}</td>
-                 <td>{taggedTo}</td>
-                 <td>{status}</td>
-              </tr>
-           )
-        })
-     }
-
-     render() {
-        return (
-            <Container>
-            <Table responsive>
-            <thead>
-              <tr>
-                <th>#id</th>
-                <th>description</th>
-                <th>assertNumber</th>
-                <th>serial</th>
-                <th>taggedTo</th>
-                <th>status</th>
-              </tr>
-            </thead>
-            <tbody>
-                {this.renderTableData()}
-            </tbody>
-          </Table>
-          </Container>
-        );
-      }
+  render() {
+    return (
+      <div>
+        <Container>
+  <Row>
+    <Col></Col>
+    <Col xs={6} align="center" style={{fontSize:"x-large","fontWeight": "bold"}}>Asset list</Col>
+    <Col></Col>
+  </Row>
+ </Container>
+      <Container>
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>#id</th>
+              <th>description</th>
+              <th>assertNumber</th>
+              <th>serial</th>
+              <th>status</th>
+            </tr>
+          </thead>
+          <tbody>{this.renderTableData()}</tbody>
+        </Table>
+      </Container>
+      </div>
+    );
+  }
 }
 
 export default AssetList;
