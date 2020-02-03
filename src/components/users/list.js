@@ -1,20 +1,28 @@
 import React from 'react';
-
+import {  withRouter } from "react-router-dom";
 import {
   Table,
   Container,
   Row,
-  Col
+  Col,
+  ButtonToolbar,
+  Button
 } from 'react-bootstrap';
+import history from '../../history';
 
 class UserList extends React.Component {
+
   constructor(props) {
     super(props);
-    this.state = {
+     this.state = {
       users: [{id: '1', firstName: '', lastName: '', email: '', mobile: ''}],
     };
   }
-
+ 
+  gotoCreate (){
+    history.push("/user-create");
+  }
+  
   renderTableData() {
     return this.state.users.map((user, index) => {
       const {id, firstName, lastName, email, mobile} = user;
@@ -34,6 +42,12 @@ class UserList extends React.Component {
   render() {
     return (
       <div>
+         <Container>
+        <ButtonToolbar>
+  <Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
+  
+</ButtonToolbar>
+</Container>
       <Container>
 <Row>
   <Col></Col>
@@ -59,4 +73,5 @@ class UserList extends React.Component {
   }
 }
 
-export default UserList;
+//export default UserList;
+export default withRouter(UserList);

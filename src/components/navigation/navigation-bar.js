@@ -20,15 +20,15 @@ class NavigationBar extends React.Component {
   render() {
     return (
       <div>
-      <Jumbotron fluid style={{"margin-bottom": ":0px"}}>
+      <Jumbotron fluid style={{"marginBottom": ":0px"}}>
         <Container>
           <h1>Asset Management</h1>
           <Row>
             <Col>
-              <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{"margin-bottom": ":0px"}}>
+              <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{"marginBottom": ":0px"}}>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                  <Nav pullRight>
+                  <Nav>
                     <Nav.Link as={NavLink} to="/users" exact>
                       Users
                     </Nav.Link>

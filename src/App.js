@@ -7,8 +7,11 @@ import AssetCreate from './components/asset/create';
 import AssetList from './components/asset/list';
 import AssetManagementCreate from './components/asset-management/create';
 import AssetManagementList from './components/asset-management/list';
+import history from './history';
 
 class App extends React.Component {
+
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -17,7 +20,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Router>
+        <Router history={history}>
           <NavigationBar />
           <Switch>
             <Route exact component={UserList} path="/" />
