@@ -59,7 +59,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm test --no-verify"
+      "pre-push": "--no-verify"
     }
   }
 }

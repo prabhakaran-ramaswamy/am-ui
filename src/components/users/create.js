@@ -3,8 +3,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {  withRouter } from "react-router-dom";
 import {
-  Container
+  Container,
+  Row,
+  Col
 } from 'react-bootstrap';
+
 
 const UserCreate = () => {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -20,54 +23,98 @@ const UserCreate = () => {
       firstName: Yup.string()
         .min(3, 'Must be 3 characters or greater')
         .max(30, 'Must be 30 characters or less')
-        .required('Required'),
+        .required('First Name value Required'),
       lastName: Yup.string()
         .min(3, 'Must be 3 characters or greater')
         .max(30, 'Must be 30 characters or less')
-        .required('Required'),
+        .required('Last Name value Required'),
       email: Yup.string()
         .email('Invalid email address')
-        .required('Required'),
+        .required('email value Required'),
       mobile: Yup.string()
         .matches(phoneRegExp, 'Phone number is not valid')
-        .required('Required'),
+        .required('Mobile value Required'),
     }),
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(JSON.stringify(values, null, 2));
     },
   });
   return (
     <Container>
     <form onSubmit={formik.handleSubmit}>
-      <div>
+      <Row>
+      <Col></Col>
+      <Col>
+      <Row>
+      <Col><label htmlFor="firstName">First Name</label></Col>
+      <Col>
+      <input name="firstName" {...formik.getFieldProps('firstName')} />
       {formik.touched.firstName && formik.errors.firstName ? (
         <div>{formik.errors.firstName}</div>
       ) : null}
-      <label htmlFor="firstName">First Name</label>
-      <input name="firstName" {...formik.getFieldProps('firstName')} />
-      </div>
-      <div>
+      </Col>
+      </Row>
+      </Col>
+      <Col></Col>
+      </Row>
+      <Row>
+      <Col></Col>
+      <Col>
+      <Row>
+      <Col><label htmlFor="lastName">Last Name</label></Col>
+      <Col>
+      <input name="lastName" {...formik.getFieldProps('lastName')} />
       {formik.touched.lastName && formik.errors.lastName ? (
         <div>{formik.errors.lastName}</div>
       ) : null}
-      <label htmlFor="lastName">Last Name</label>
-      <input name="lastName" {...formik.getFieldProps('lastName')} />
-      </div>
-      <div>
+      </Col>
+      </Row>
+      </Col>
+      <Col></Col>
+      </Row>
+      <Row>
+      <Col></Col>
+      <Col>
+      <Row>
+      <Col><label htmlFor="email">Email Address</label></Col>
+      <Col>
+      <input name="email" {...formik.getFieldProps('email')} />
       {formik.touched.email && formik.errors.email ? (
         <div>{formik.errors.email}</div>
       ) : null}
-      <label htmlFor="email">Email Address</label>
-      <input name="email" {...formik.getFieldProps('email')} />
-      </div>
-      <div>
+      </Col>
+      </Row>
+      </Col>
+      <Col></Col>
+      </Row>
+      <Row>
+      <Col></Col>
+      <Col>
+      <Row>
+      <Col> <label htmlFor="mobile">Mobile Number</label></Col>
+      <Col>
+      <input name="mobile" {...formik.getFieldProps('mobile')} />
       {formik.touched.mobile && formik.errors.mobile ? (
         <div>{formik.errors.mobile}</div>
       ) : null}
-      <label htmlFor="mobile">Mobile Number</label>
-      <input name="mobile" {...formik.getFieldProps('mobile')} />
-      </div>
+      </Col>
+      </Row>
+      </Col>
+      <Col></Col>
+      </Row>
+      <Row>
+      <Col></Col>
+      <Col>
+      <Row className="justify-content-md-center">
+      <Col md="auto">
+      <button type="submit">Cancel</button>
+      
       <button type="submit">Submit</button>
+      </Col>
+      </Row>
+      </Col>
+      <Col></Col>
+      </Row>
     </form>
     </Container>
   );
