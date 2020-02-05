@@ -3,8 +3,11 @@ import {
   Table,
   Container,
   Row,
-  Col
+  Col,
+  ButtonToolbar,
+  Button
 } from 'react-bootstrap';
+import history from '../../history';
 
 class AssetManagementList extends React.Component {
   constructor(props) {
@@ -12,6 +15,9 @@ class AssetManagementList extends React.Component {
     this.state = {
       am: [{id: '1', description: '', assertNumber: '', taggedTo: ''}],
     };
+  }
+  gotoCreate (){
+    history.push("/asset-management-create");
   }
 
   renderTableData() {
@@ -30,7 +36,11 @@ class AssetManagementList extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
+      <ButtonToolbar>
+<Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
+
+</ButtonToolbar>
       <Container>
 <Row>
   <Col></Col>
@@ -51,7 +61,7 @@ class AssetManagementList extends React.Component {
           <tbody>{this.renderTableData()}</tbody>
         </Table>
       </Container>
-      </div>
+      </Container>
     );
   }
 }

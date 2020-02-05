@@ -1,10 +1,14 @@
 import React from 'react';
+import {  withRouter } from "react-router-dom";
 import {
   Table,
   Container,
   Row,
-  Col
+  Col,
+  ButtonToolbar,
+  Button
 } from 'react-bootstrap';
+import history from '../../history';
 
 class AssetList extends React.Component {
   constructor(props) {
@@ -23,6 +27,9 @@ class AssetList extends React.Component {
     };
   }
 
+  gotoCreate (){
+    history.push("/asset-create");
+  }
   renderTableData() {
     return this.state.assets.map((asset, index) => {
       const {id, description, assertNumber, serial, status} = asset;
@@ -40,7 +47,11 @@ class AssetList extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
+        <ButtonToolbar>
+  <Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
+  
+</ButtonToolbar>
         <Container>
   <Row>
     <Col></Col>
@@ -62,9 +73,9 @@ class AssetList extends React.Component {
           <tbody>{this.renderTableData()}</tbody>
         </Table>
       </Container>
-      </div>
+      </Container>
     );
   }
 }
 
-export default AssetList;
+export default withRouter(AssetList);

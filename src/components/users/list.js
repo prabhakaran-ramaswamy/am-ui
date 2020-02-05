@@ -41,7 +41,7 @@ class UserList extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
          <Container>
         <ButtonToolbar>
   <Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
@@ -68,10 +68,9 @@ class UserList extends React.Component {
           <tbody>{this.renderTableData()}</tbody>
         </Table>
       </Container>
-      </div>
+      </Container>
     );
   }
 }
 
-//export default UserList;
 export default withRouter(UserList);

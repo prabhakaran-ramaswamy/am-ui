@@ -7,7 +7,7 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-
+import history from '../../history';
 
 const UserCreate = () => {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -50,7 +50,7 @@ const UserCreate = () => {
       <Col>
       <input name="firstName" {...formik.getFieldProps('firstName')} />
       {formik.touched.firstName && formik.errors.firstName ? (
-        <div>{formik.errors.firstName}</div>
+        <div style={{color:'red'}}>{formik.errors.firstName}</div>
       ) : null}
       </Col>
       </Row>
@@ -65,7 +65,7 @@ const UserCreate = () => {
       <Col>
       <input name="lastName" {...formik.getFieldProps('lastName')} />
       {formik.touched.lastName && formik.errors.lastName ? (
-        <div>{formik.errors.lastName}</div>
+        <div style={{color:'red'}}>{formik.errors.lastName}</div>
       ) : null}
       </Col>
       </Row>
@@ -80,7 +80,7 @@ const UserCreate = () => {
       <Col>
       <input name="email" {...formik.getFieldProps('email')} />
       {formik.touched.email && formik.errors.email ? (
-        <div>{formik.errors.email}</div>
+        <div style={{color:'red'}}>{formik.errors.email}</div>
       ) : null}
       </Col>
       </Row>
@@ -95,7 +95,7 @@ const UserCreate = () => {
       <Col>
       <input name="mobile" {...formik.getFieldProps('mobile')} />
       {formik.touched.mobile && formik.errors.mobile ? (
-        <div>{formik.errors.mobile}</div>
+        <div style={{color:'red'}}>{formik.errors.mobile}</div>
       ) : null}
       </Col>
       </Row>
@@ -107,9 +107,8 @@ const UserCreate = () => {
       <Col>
       <Row className="justify-content-md-center">
       <Col md="auto">
-      <button type="submit">Cancel</button>
-      
-      <button type="submit">Submit</button>
+      <button type="button" className="mr-2" onClick={()=>{history.push("/users");}}>Cancel</button>
+      <button type="submit" >Submit</button>
       </Col>
       </Row>
       </Col>
