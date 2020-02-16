@@ -1,4 +1,5 @@
-import React from 'react';
+import React , {useCallback} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {  withRouter } from "react-router-dom";
@@ -9,15 +10,24 @@ import {
 } from 'react-bootstrap';
 import history from '../../history';
 
+import {actionTypes, selectors} from '../../features/asset';
+
 const AssetCreate = () => {
+
+  const initialVal = useSelector(selectors.getAssetValue);
+
+  const dispatch = useDispatch();
+
+  const handleCancel = useCallback(() => {
+    dispatch({
+      type: actionTypes.LIST_ASSET_STARTED,
+    });
+    history.push("/assets");
+  }, [dispatch]);
+
+
   const formik = useFormik({
-    initialValues: {
-      id:'',
-      description: '',
-      assetNumber: '',
-      serial: '',
-      status: '',
-    },
+    initialValues: initialVal,
     validationSchema: Yup.object({
       description: Yup.string()
         .min(3, 'Must be 3 characters or greater')
@@ -101,7 +111,7 @@ const AssetCreate = () => {
       <Col>
       <Row className="justify-content-md-center">
       <Col md="auto">
-      <button type="button" className="mr-2" onClick={()=>{history.push("/assets");}}>Cancel</button>
+      <button type="button" className="mr-2" onClick={handleCancel}>Cancel</button>
       <button type="submit" >Submit</button>
       </Col>
       </Row>

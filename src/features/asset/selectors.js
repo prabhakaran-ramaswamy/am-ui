@@ -1,0 +1,1 @@
+export const getAssetValue = state => state.asset || { id:'', description: '', assetNumber: '', serial: '', status: ''}

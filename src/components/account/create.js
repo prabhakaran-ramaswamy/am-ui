@@ -1,5 +1,6 @@
-import React from 'react';
+import React , {useCallback} from 'react';
 import { useFormik } from 'formik';
+import {useSelector, useDispatch} from 'react-redux';
 import * as Yup from 'yup';
 import {  withRouter } from "react-router-dom";
 import {
@@ -8,17 +9,25 @@ import {
   Col
 } from 'react-bootstrap';
 import history from '../../history';
+import {actionTypes, selectors} from '../../features/account';
 
 const UserCreate = () => {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+
+  const initialVal = useSelector(selectors.getAccountValue);
+
+  const dispatch = useDispatch();
+
+  const handleCancel = useCallback(() => {
+    dispatch({
+      type: actionTypes.LIST_ACCOUNT_STARTED,
+    });
+    history.push("/users");
+  }, [dispatch]);
+
   const formik = useFormik({
-    initialValues: {
-      id:'',
-      firstName: '',
-      lastName: '',
-      email: '',
-      mobile: '',
-    },
+    initialValues: initialVal,
     validationSchema: Yup.object({
       firstName: Yup.string()
         .min(3, 'Must be 3 characters or greater')
@@ -107,7 +116,7 @@ const UserCreate = () => {
       <Col>
       <Row className="justify-content-md-center">
       <Col md="auto">
-      <button type="button" className="mr-2" onClick={()=>{history.push("/users");}}>Cancel</button>
+      <button type="button" className="mr-2" onClick={handleCancel}>Cancel</button>
       <button type="submit" >Submit</button>
       </Col>
       </Row>

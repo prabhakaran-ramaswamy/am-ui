@@ -1,0 +1,1 @@
+export const getMangedAssetValue = state => state.mangedAsset ||  { id:'', asset:{id:"100",description: 'description'},account:{id:"100"}}

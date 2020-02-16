@@ -1,8 +1,8 @@
 import React from 'react';
 import {Router, Switch, Route} from 'react-router-dom';
 import NavigationBar from './components/navigation/navigation-bar';
-import UserList from './components/users/list';
-import UserCreate from './components/users/create';
+import UserList from './components/account/list';
+import UserCreate from './components/account/create';
 import AssetCreate from './components/asset/create';
 import AssetList from './components/asset/list';
 import AssetManagementCreate from './components/asset-management/create';

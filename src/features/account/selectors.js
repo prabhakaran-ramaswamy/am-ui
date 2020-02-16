@@ -1,0 +1,1 @@
+export const getAccountValue = state => state.account ||  { id:'', firstName: '', lastName: '', email: '', mobile: ''}

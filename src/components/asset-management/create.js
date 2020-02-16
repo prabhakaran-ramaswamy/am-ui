@@ -1,6 +1,6 @@
-import React from 'react';
+import React , {useCallback} from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import {useSelector, useDispatch} from 'react-redux';
 import {  withRouter } from "react-router-dom";
 import {
   Container,
@@ -8,26 +8,77 @@ import {
   Col
 } from 'react-bootstrap';
 import history from '../../history';
-
+import {actionTypes, selectors} from '../../features/manage_asset';
 const AssetManagementCreate = () => {
+  const assetList = [
+    {
+        id: 300,
+        description: 'Laptop',
+        assetNumber:1
+    }, {
+        id: 200,
+        description: 'Mobile',
+        assetNumber:2
+    }, {
+        id: 100,
+        description: 'Server',
+        assetNumber:3
+    }, {
+        id: 400,
+        description: 'Desktop',
+        assetNumber:4
+    }
+    ];
+    const accountList = [
+      {
+          id: 300,
+          firstName: 'Peter',
+          lastName: 'P'
+      }, {
+          id: 200,
+          firstName: 'Saravanan',
+          lastName: 'R'
+      }, {
+          id: 100,
+          firstName: 'Prabhakaran',
+          lastName: 'R'
+      }, {
+          id: 400,
+          firstName: 'Ramaswamy',
+          lastName: 'M'
+      }
+      ];
+    function getAssetOptions( options ) {
+        return (
+            options.map(option => 
+                        <option key={option.id} value={option.id}>                                   
+                        {option.description} - { option.assetNumber}
+                        </option>)
+                       );
+    }
+    function getAccountOptions( options ) {
+      return (
+          options.map(option => 
+                      <option key={option.id} value={option.id}>                                   
+                      {option.firstName} {option.lastName}
+                      </option>)
+                     );
+  }
+
+  
+  const initialVal = useSelector(selectors.getMangedAssetValue);
+
+  const dispatch = useDispatch();
+
+  const handleCancel = useCallback(() => {
+    dispatch({
+      type: actionTypes.LIST_MANAGE_ASSET_STARTED,
+    });
+    history.push("/asset-user-list");
+  }, [dispatch]);
+
     const formik = useFormik({
-      initialValues: {
-        id:'',
-        description: '',
-        assetNumber:'',
-        assetId: '',
-        accountId: '',
-      },
-      validationSchema: Yup.object({
-        description: Yup.string()
-          .min(3, 'Must be 3 characters or greater')
-          .max(30, 'Must be 30 characters or less')
-          .required('Asset value Required'),
-          assetNumber: Yup.string()
-          .min(3, 'Must be 3 characters or greater')
-          .max(30, 'Must be 30 characters or less')
-          .required('Account number value Required'),
-      }),
+      initialValues:initialVal,
       onSubmit: values => {
         console.log(JSON.stringify(values, null, 2));
       },
@@ -39,12 +90,13 @@ const AssetManagementCreate = () => {
         <Col ></Col>
         <Col md="auto">
         <Row>
-        <Col><label htmlFor="assetId">Asset</label></Col>
+        <Col><label htmlFor="asset.id">Asset</label></Col>
         <Col>
-        <input name="assetId" {...formik.getFieldProps('assetId')} />
-        {formik.touched.description && formik.errors.assetId ? (
-          <div style={{color:'red'}}>{formik.errors.assetId}</div>
-        ) : null}
+        <select
+        name="asset.id"
+        {...formik.getFieldProps('asset.id')}>
+        {getAssetOptions(assetList)}
+      </select>
         </Col>
         </Row>
         </Col>
@@ -52,38 +104,13 @@ const AssetManagementCreate = () => {
         </Row>
         <Row>
         <Col></Col>
-        <Col>
+        <Col md="auto">
         <Row>
-        <Col><label htmlFor="accountId">Account</label></Col>
+        <Col><label htmlFor="account.id">Account</label></Col>
         <Col>
-        <input name="accountId" {...formik.getFieldProps('accountId')} />
-        {formik.touched.accountId && formik.errors.accountId ? (
-          <div style={{color:'red'}}>{formik.errors.accountId}</div>
-        ) : null}
-        </Col>
-        </Row>
-        </Col>
-        <Col></Col>
-        </Row>
-        <Row>
-        <Col></Col>
-        <Col>
-        <Row>
-        <Col> <label htmlFor="description">Description</label></Col>
-        <Col>
-        <Col> <label htmlFor="description">{formik.values.description}</label></Col>
-        </Col>
-        </Row>
-        </Col>
-        <Col></Col>
-        </Row>
-        <Row>
-        <Col></Col>
-        <Col>
-        <Row>
-        <Col> <label htmlFor="assetNumber">Description</label></Col>
-        <Col>
-        <Col> <label htmlFor="assetNumber">{formik.values.assetNumber}</label></Col>
+        <select name="account.id" {...formik.getFieldProps('account.id')} >
+        {getAccountOptions(accountList)}
+      </select>       
         </Col>
         </Row>
         </Col>
@@ -94,7 +121,7 @@ const AssetManagementCreate = () => {
         <Col>
         <Row className="justify-content-md-center">
         <Col md="auto">
-        <button type="button" className="mr-2" onClick={()=>{history.push("/asset-user-list");}}>Cancel</button>
+        <button type="button" className="mr-2" onClick={handleCancel}>Cancel</button>
         <button type="submit" >Submit</button>
         </Col>
         </Row>
