@@ -1,1 +1,2 @@
-export const getAssetValue = state => state.asset || { id:'', description: '', assetNumber: '', serial: '', status: ''}
+export const getAsset = state => state.asset || { id:'', description: '', assetNumber: '', serial: '', status: ''}
+export const getAssets = state => state.assets || [{id: 300, description: 'Laptop', assetNumber:"assertNumber1", serial: 'serial1', status: 'ACTIVE'}, {id: 200, description: 'Mobile', assetNumber:2, serial: 'serial1', status: 'DEACTIVE' },{id: 100, description: 'Server', assetNumber:3 , serial: 'serial1', status: 'ACTIVE'}, {id: 400, description: 'Desktop', assetNumber:4, serial: 'serial1', status: 'ACTIVE'}]

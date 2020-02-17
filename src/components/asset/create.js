@@ -10,11 +10,11 @@ import {
 } from 'react-bootstrap';
 import history from '../../history';
 
-import {actionTypes, selectors} from '../../features/asset';
+import {actionTypes, assetselector} from '../../features/asset';
 
 const AssetCreate = () => {
 
-  const initialVal = useSelector(selectors.getAssetValue);
+  const initialVal = useSelector(assetselector.getAsset);
 
   const dispatch = useDispatch();
 

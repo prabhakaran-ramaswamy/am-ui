@@ -1,1 +1,4 @@
-export const getMangedAssetValue = state => state.mangedAsset ||  { id:'', asset:{id:"100",description: 'description'},account:{id:"100"}}
+export const getMangedAsset = state => state.mangedAsset ||  { id:'', asset:{id:"100",description: 'description'},account:{id:"100"}}
+
+export const getMangedAssets = state => state.mangedAssets ||  [{id: '2', asset: {id: 300, description: 'Laptop', assetNumber:"assertNumber1", serial: 'serial1', status: 'ACTIVE'}, account: {id: 300,firstName: 'Peter',lastName: 'P',email: 'test@test.com', mobile: '0123456789'}},{id: '1',asset:{id: 200, description: 'Mobile', assetNumber:2, serial: 'serial1', status: 'DEACTIVE' },account:{id: 300,firstName: 'Peter',lastName: 'P',email: 'test@test.com', mobile: '0123456789'}}, {id:3, asset: {id: 100, description: 'Server', assetNumber:3 , serial: 'serial1', status: 'ACTIVE'}, account:{ id: 100,firstName: 'Prabhakaran',lastName: 'R', email: 'test@test.com', mobile: '0123456789'}},{id:4,asset:{id: 400, description: 'Desktop', assetNumber:4, serial: 'serial1', status: 'ACTIVE'},account:{id: 400,firstName: 'Ramaswamy',lastName: 'M',email: 'test@test.com', mobile: '0123456789'}}]
+

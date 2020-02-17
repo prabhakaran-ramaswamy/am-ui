@@ -9,13 +9,13 @@ import {
   Col
 } from 'react-bootstrap';
 import history from '../../history';
-import {actionTypes, selectors} from '../../features/account';
+import {actionTypes, accountselector} from '../../features/account';
 
 const UserCreate = () => {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 
-  const initialVal = useSelector(selectors.getAccountValue);
+  const initialVal = useSelector(accountselector.getAccount);
 
   const dispatch = useDispatch();
 

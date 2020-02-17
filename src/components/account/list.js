@@ -1,5 +1,6 @@
 import React from 'react';
 import {  withRouter } from "react-router-dom";
+import {useSelector} from 'react-redux';
 import {
   Table,
   Container,
@@ -9,22 +10,18 @@ import {
   Button
 } from 'react-bootstrap';
 import history from '../../history';
+import {accountselector} from '../../features/account';
 
-class UserList extends React.Component {
-
-  constructor(props) {
-    super(props);
-     this.state = {
-      users: [{id: '1', firstName: '', lastName: '', email: '', mobile: ''}],
-    };
-  }
- 
-  gotoCreate (){
+  const UserList = () => {
+     
+   
+  const gotoCreate = ()=>{
     history.push("/user-create");
-  }
+  };
   
-  renderTableData() {
-    return this.state.users.map((user, index) => {
+  const renderTableData = ()=>{
+    const  users = useSelector(accountselector.getAccounts);
+    return users.map((user, index) => {
       const {id, firstName, lastName, email, mobile} = user;
       return (
         <tr key={index}>
@@ -37,14 +34,14 @@ class UserList extends React.Component {
         </tr>
       );
     });
-  }
+  };
 
-  render() {
+  
     return (
       <Container>
          <Container>
         <ButtonToolbar>
-  <Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
+  <Button variant="secondary" onClick={gotoCreate}>Create</Button>
   
 </ButtonToolbar>
 </Container>
@@ -65,12 +62,11 @@ class UserList extends React.Component {
               <th>mobile</th>
             </tr>
           </thead>
-          <tbody>{this.renderTableData()}</tbody>
+          <tbody>{renderTableData()}</tbody>
         </Table>
       </Container>
       </Container>
     );
-  }
 }
 
 export default withRouter(UserList);

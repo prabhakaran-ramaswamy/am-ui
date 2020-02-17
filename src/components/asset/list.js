@@ -1,5 +1,6 @@
 import React from 'react';
 import {  withRouter } from "react-router-dom";
+import {useSelector} from 'react-redux';
 import {
   Table,
   Container,
@@ -9,47 +10,33 @@ import {
   Button
 } from 'react-bootstrap';
 import history from '../../history';
+import {assetselector} from '../../features/asset';
 
-class AssetList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      assets: [
-        {
-          id: '1',
-          description: '',
-          assertNumber: '',
-          serial: '',
-          taggedTo: '',
-          status: '',
-        },
-      ],
-    };
-  }
+const AssetList = () => {
 
-  gotoCreate (){
+  const gotoCreate =()=>{
     history.push("/asset-create");
-  }
-  renderTableData() {
-    return this.state.assets.map((asset, index) => {
-      const {id, description, assertNumber, serial, status} = asset;
+  };
+  const renderTableData=()=> {
+    const  assets = useSelector(assetselector.getAssets);
+    return assets.map((asset, index) => {
+      const {id, description, assetNumber, serial, status} = asset;
       return (
         <tr key={index}>
           <td>{id}</td>
           <td>{description}</td>
-          <td>{assertNumber}</td>
+          <td>{assetNumber}</td>
           <td>{serial}</td>
           <td>{status}</td>
         </tr>
       );
     });
-  }
+  };
 
-  render() {
     return (
       <Container>
         <ButtonToolbar>
-  <Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
+  <Button variant="secondary" onClick={gotoCreate}>Create</Button>
   
 </ButtonToolbar>
         <Container>
@@ -65,17 +52,16 @@ class AssetList extends React.Component {
             <tr>
               <th>#id</th>
               <th>description</th>
-              <th>assertNumber</th>
+              <th>assetNumber</th>
               <th>serial</th>
               <th>status</th>
             </tr>
           </thead>
-          <tbody>{this.renderTableData()}</tbody>
+          <tbody>{renderTableData()}</tbody>
         </Table>
       </Container>
       </Container>
     );
   }
-}
 
 export default withRouter(AssetList);

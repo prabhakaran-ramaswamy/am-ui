@@ -8,57 +8,24 @@ import {
   Col
 } from 'react-bootstrap';
 import history from '../../history';
-import {actionTypes, selectors} from '../../features/manage_asset';
+import {actionTypes, maselector} from '../../features/manage_asset';
+import { assetselector} from '../../features/asset';
+import { accountselector} from '../../features/account';
+
 const AssetManagementCreate = () => {
-  const assetList = [
-    {
-        id: 300,
-        description: 'Laptop',
-        assetNumber:1
-    }, {
-        id: 200,
-        description: 'Mobile',
-        assetNumber:2
-    }, {
-        id: 100,
-        description: 'Server',
-        assetNumber:3
-    }, {
-        id: 400,
-        description: 'Desktop',
-        assetNumber:4
-    }
-    ];
-    const accountList = [
-      {
-          id: 300,
-          firstName: 'Peter',
-          lastName: 'P'
-      }, {
-          id: 200,
-          firstName: 'Saravanan',
-          lastName: 'R'
-      }, {
-          id: 100,
-          firstName: 'Prabhakaran',
-          lastName: 'R'
-      }, {
-          id: 400,
-          firstName: 'Ramaswamy',
-          lastName: 'M'
-      }
-      ];
-    function getAssetOptions( options ) {
+     const getAssetOptions = () => {
+        const assets = useSelector(assetselector.getAssets);
         return (
-            options.map(option => 
+          assets.map(option => 
                         <option key={option.id} value={option.id}>                                   
                         {option.description} - { option.assetNumber}
                         </option>)
                        );
     }
-    function getAccountOptions( options ) {
+    const  getAccountOptions = () => {
+      const accounts = useSelector(accountselector.getAccounts);
       return (
-          options.map(option => 
+        accounts.map(option => 
                       <option key={option.id} value={option.id}>                                   
                       {option.firstName} {option.lastName}
                       </option>)
@@ -66,7 +33,7 @@ const AssetManagementCreate = () => {
   }
 
   
-  const initialVal = useSelector(selectors.getMangedAssetValue);
+  const initialVal = useSelector(maselector.getMangedAsset);
 
   const dispatch = useDispatch();
 
@@ -95,7 +62,7 @@ const AssetManagementCreate = () => {
         <select
         name="asset.id"
         {...formik.getFieldProps('asset.id')}>
-        {getAssetOptions(assetList)}
+        {getAssetOptions()}
       </select>
         </Col>
         </Row>
@@ -109,7 +76,7 @@ const AssetManagementCreate = () => {
         <Col><label htmlFor="account.id">Account</label></Col>
         <Col>
         <select name="account.id" {...formik.getFieldProps('account.id')} >
-        {getAccountOptions(accountList)}
+        {getAccountOptions()}
       </select>       
         </Col>
         </Row>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {
   Table,
   Container,
@@ -8,37 +9,35 @@ import {
   Button
 } from 'react-bootstrap';
 import history from '../../history';
+import {maselector} from '../../features/manage_asset';
 
-class AssetManagementList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      am: [{id: '1', description: '', assertNumber: '', taggedTo: ''}],
-    };
-  }
-  gotoCreate (){
+
+const AssetManagementList = () => {
+ 
+  const gotoCreate =()=>{
     history.push("/asset-management-create");
-  }
+  };
 
-  renderTableData() {
-    return this.state.am.map((am, index) => {
-      const {id, description, assertNumber, taggedTo} = am;
+  const renderTableData=()=> {
+    const  manage_assets = useSelector(maselector.getMangedAssets);
+    return manage_assets.map((ma, index) => {
+      const {id} = ma;
+      const { description, assetNumber}=ma.asset;
+      const { firstName, lastName}=ma.account;
       return (
         <tr key={index}>
           <td>{id}</td>
           <td>{description}</td>
-          <td>{assertNumber}</td>
-          <td>{taggedTo}</td>
+          <td>{assetNumber}</td>
+      <td>{firstName} {lastName}</td>
         </tr>
       );
     });
   }
-
-  render() {
     return (
       <Container>
       <ButtonToolbar>
-<Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
+<Button variant="secondary" onClick={gotoCreate}>Create</Button>
 
 </ButtonToolbar>
       <Container>
@@ -54,16 +53,16 @@ class AssetManagementList extends React.Component {
             <tr>
               <th>#id</th>
               <th>description</th>
-              <th>assertNumber</th>
+              <th>assetNumber</th>
               <th>taggedTo</th>
             </tr>
           </thead>
-          <tbody>{this.renderTableData()}</tbody>
+          <tbody>{renderTableData()}</tbody>
         </Table>
       </Container>
       </Container>
     );
   }
-}
+
 
 export default AssetManagementList;
