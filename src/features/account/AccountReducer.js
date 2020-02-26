@@ -3,6 +3,7 @@ import {CREATE_ACCOUNT_STARTED, UPDATE_ACCOUNT_STARTED, DELETE_ACCOUNT_STARTED, 
 const initialState = {};
 
 export default (state = initialState, action) => {
+  console.log(action.type)
   switch (action.type) {
     case CREATE_ACCOUNT_STARTED:
       return {...state, value: state.value + 1};

@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import history from '../../history';
 
-import {actionTypes, assetselector} from '../../features/asset';
+import {assetActionTypes, assetselector} from '../../features/asset';
 
 const AssetCreate = () => {
 
@@ -20,7 +20,7 @@ const AssetCreate = () => {
 
   const handleCancel = useCallback(() => {
     dispatch({
-      type: actionTypes.LIST_ASSET_STARTED,
+      type: assetActionTypes.LIST_ASSET_STARTED,
     });
     history.push("/assets");
   }, [dispatch]);

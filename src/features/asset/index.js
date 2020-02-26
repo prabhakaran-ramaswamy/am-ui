@@ -1,6 +1,6 @@
-import * as actionTypes from './actionTypes';
+import * as assetActionTypes from './actionTypes';
 import * as assetselector from './selectors';
 
-export {default as CounterReducer} from './AssetReducer';
-export {actionTypes};
+export {default as AssetReducer} from './AssetReducer';
+export {assetActionTypes};
 export {assetselector};

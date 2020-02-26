@@ -8,7 +8,7 @@ import {
   Col
 } from 'react-bootstrap';
 import history from '../../history';
-import {actionTypes, maselector} from '../../features/manage_asset';
+import {maActionTypes, maselector} from '../../features/manage_asset';
 import { assetselector} from '../../features/asset';
 import { accountselector} from '../../features/account';
 
@@ -39,7 +39,7 @@ const AssetManagementCreate = () => {
 
   const handleCancel = useCallback(() => {
     dispatch({
-      type: actionTypes.LIST_MANAGE_ASSET_STARTED,
+      type: maActionTypes.LIST_MANAGE_ASSET_STARTED,
     });
     history.push("/asset-user-list");
   }, [dispatch]);

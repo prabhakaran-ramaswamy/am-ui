@@ -1,9 +1,14 @@
 import {combineReducers, createStore} from 'redux';
-import {CounterReducer} from './features/counter';
+import {AccountReducer} from './features/account';
+import {AssetReducer} from './features/asset';
+import {ManageAssetReducer} from './features/manage_asset';
+
 
 /* Create root reducer, containing all features of the application */
 const rootReducer = combineReducers({
-  count: CounterReducer,
+  ma: ManageAssetReducer,
+  account:AccountReducer,
+  asset:AssetReducer
 });
 
 /* eslint-disable no-underscore-dangle */

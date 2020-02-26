@@ -9,7 +9,7 @@ import {
   Col
 } from 'react-bootstrap';
 import history from '../../history';
-import {actionTypes, accountselector} from '../../features/account';
+import {accountActionTypes, accountselector} from '../../features/account';
 
 const UserCreate = () => {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -21,7 +21,7 @@ const UserCreate = () => {
 
   const handleCancel = useCallback(() => {
     dispatch({
-      type: actionTypes.LIST_ACCOUNT_STARTED,
+      type: accountActionTypes.LIST_ACCOUNT_STARTED,
     });
     history.push("/users");
   }, [dispatch]);

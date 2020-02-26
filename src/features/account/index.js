@@ -1,6 +1,6 @@
-import * as actionTypes from './actionTypes';
+import * as accountActionTypes from './actionTypes';
 import * as accountselector from './selectors';
 
-export {default as CounterReducer} from './AccountReducer';
-export {actionTypes};
+export {default as AccountReducer} from './AccountReducer';
+export {accountActionTypes};
 export {accountselector};

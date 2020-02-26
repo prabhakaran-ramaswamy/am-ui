@@ -8,22 +8,16 @@ import AssetList from './components/asset/list';
 import AssetManagementCreate from './components/asset-management/create';
 import AssetManagementList from './components/asset-management/list';
 import history from './history';
+import {fetchAllAccounts} from './http/http_data'
 
-class App extends React.Component {
+const App = () => {
 
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
     return (
       <div className="App">
         <Router history={history}>
           <NavigationBar />
           <Switch>
-            <Route exact component={UserList} path="/" />
+            <Route exact component={UserList} path="/" onEnter={fetchAllAccounts()}/>
             <Route component={UserList} path="/users" />
             <Route component={UserCreate} path="/user-create" />
             <Route component={AssetManagementList} path="/asset-user-list" />
@@ -38,5 +32,4 @@ class App extends React.Component {
       </div>
     );
   }
-}
 export default App;

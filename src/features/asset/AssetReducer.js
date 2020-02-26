@@ -3,6 +3,8 @@ import {CREATE_ASSET_STARTED, UPDATE_ASSET_STARTED, DELETE_ASSET_STARTED, VIEW_A
 const initialState = {};
 
 export default (state = initialState, action) => {
+  console.log(action.type)
+
   switch (action.type) {
     case CREATE_ASSET_STARTED:
       return {...state, value: state.value + 1};
