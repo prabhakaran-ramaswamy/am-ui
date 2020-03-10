@@ -1,6 +1,5 @@
-import React , {useEffect}from 'react';
+import React from 'react';
 import {Router, Switch, Route} from 'react-router-dom';
-
 import NavigationBar from './components/navigation/navigation-bar';
 import UserList from './components/account/list';
 import UserCreate from './components/account/create';
@@ -9,23 +8,15 @@ import AssetList from './components/asset/list';
 import AssetManagementCreate from './components/asset-management/create';
 import AssetManagementList from './components/asset-management/list';
 import history from './history';
-import {fetchAllAccounts} from './http/http_data'
+import {makeAccountRequest} from './http/http_data'
 
 const App = () => {
-
-  
-  useEffect(() => {
-    const fetchData =  () => {
-      fetchAllAccounts();
-    };
-    fetchData();
-  }, []);
     return (
       <div className="App">
         <Router history={history}>
           <NavigationBar />
           <Switch>
-            <Route exact component={UserList} path="/"/>
+            <Route exact component={UserList} path="/" onEnter={makeAccountRequest()}/>
             <Route component={UserList} path="/users" />
             <Route component={UserCreate} path="/user-create" />
             <Route component={AssetManagementList} path="/asset-user-list" />
@@ -41,4 +32,5 @@ const App = () => {
     );
   }
 
+  
 export default App;

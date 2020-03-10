@@ -1,14 +1,13 @@
 import {combineReducers, createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import {AccountReducer} from './features/account';
+import {accountReducer} from './features/account';
 import {AssetReducer} from './features/asset';
 import {ManageAssetReducer} from './features/manage_asset';
 
-
 /* Create root reducer, containing all features of the application */
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   ma: ManageAssetReducer,
-  account:AccountReducer,
+  account:accountReducer,
   asset:AssetReducer
 });
 
