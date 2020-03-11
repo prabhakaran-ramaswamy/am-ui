@@ -1,4 +1,4 @@
-import {combineReducers, createStore, applyMiddleware} from 'redux';
+import {combineReducers, compose, createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {accountReducer} from './features/account';
 import {AssetReducer} from './features/asset';
@@ -11,11 +11,11 @@ export const rootReducer = combineReducers({
   asset:AssetReducer
 });
 
-/* eslint-disable no-underscore-dangle */
-const reduxDevtoolsEnhancer =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(); // initialize Redux Dev Tools, if they are installed in browser.
-/* eslint-enable */
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducer, reduxDevtoolsEnhancer,  applyMiddleware(thunk));
+const store = createStore(
+  rootReducer,
+  composeEnhancer(applyMiddleware(thunk)),
+);
 
 export default store;
