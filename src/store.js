@@ -7,8 +7,8 @@ import {ManageAssetReducer} from './features/manage_asset';
 /* Create root reducer, containing all features of the application */
 export const rootReducer = combineReducers({
   ma: ManageAssetReducer,
-  account:accountReducer,
-  asset:AssetReducer
+  acc:accountReducer,
+  as:AssetReducer
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,8 +1,7 @@
+import {Map,List} from 'immutable';
 
 
-
-export const accountInitialState = {
-    status: null,
-    response: null,
-  };
+export const accountsInitialState = Map({
+        accounts: List(),
+});
   

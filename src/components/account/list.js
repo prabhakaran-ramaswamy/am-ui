@@ -1,6 +1,7 @@
 import React from 'react';
 import {  withRouter } from "react-router-dom";
-import {useSelector} from 'react-redux';
+import { connect } from 'react-redux';
+//import {List} from 'immutable';
 import {
   Table,
   Container,
@@ -10,18 +11,18 @@ import {
   Button
 } from 'react-bootstrap';
 import history from '../../history';
-import {accountselector} from '../../features/account';
-
-  const UserList = () => {
-     
-   
-  const gotoCreate = ()=>{
+//import {accountselector} from '../../features/account';
+class UserList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderTableData = this.renderTableData.bind(this);
+  }
+  gotoCreate(){
     history.push("/user-create");
-  };
+  }
   
-  const renderTableData = ()=>{
-    const  users = useSelector(accountselector.getAccounts);
-    return users.map((user, index) => {
+  renderTableData(){
+    return  this.props.accounts.map((user, index) => {
       const {id, firstName, lastName, email, mobile} = user;
       return (
         <tr key={index}>
@@ -34,14 +35,14 @@ import {accountselector} from '../../features/account';
         </tr>
       );
     });
-  };
+  }
 
-  
+  render() {
     return (
       <Container>
          <Container>
         <ButtonToolbar>
-  <Button variant="secondary" onClick={gotoCreate}>Create</Button>
+  <Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
   
 </ButtonToolbar>
 </Container>
@@ -62,11 +63,21 @@ import {accountselector} from '../../features/account';
               <th>mobile</th>
             </tr>
           </thead>
-          <tbody>{renderTableData()}</tbody>
+          <tbody>{this.renderTableData()}</tbody>
         </Table>
       </Container>
       </Container>
     );
 }
+}
+function mapStateToProps() {
+  const listOfAccounts = [];
+        return { 
+            accounts: [] 
+        }
+  }
 
-export default withRouter(UserList);
+export default connect(
+  mapStateToProps,
+  null
+)( withRouter(UserList))
