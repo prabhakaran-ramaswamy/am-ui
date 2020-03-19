@@ -1,5 +1,9 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+//import {useSelector} from 'react-redux';
+import {  withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {List} from 'immutable';
 import {
   Table,
   Container,
@@ -9,18 +13,17 @@ import {
   Button
 } from 'react-bootstrap';
 import history from '../../history';
-import {maselector} from '../../features/manage_asset';
+//import {maselector} from '../../features/manage_asset';
 
 
-const AssetManagementList = () => {
+const AssetManagementList = (props) => {
  
   const gotoCreate =()=>{
     history.push("/asset-management-create");
   };
 
   const renderTableData=()=> {
-    const  manage_assets = useSelector(maselector.getMangedAssets);
-    return manage_assets.map((ma, index) => {
+    return props.managed_assets.map((ma, index) => {
       const {id} = ma;
       const { description, assetNumber}=ma.asset;
       const { firstName, lastName}=ma.account;
@@ -64,5 +67,12 @@ const AssetManagementList = () => {
     );
   }
 
-
-export default AssetManagementList;
+  function mapStateToProps(state) {
+    return { managed_assets:state.ma.get("managed_assets") || List() }
+  }
+  
+  AssetManagementList.propTypes = {
+    managed_assets:  PropTypes.any,
+  };
+  
+export default connect(mapStateToProps)( withRouter(AssetManagementList))

@@ -1,6 +1,9 @@
 import React from 'react';
 import {  withRouter } from "react-router-dom";
-import {useSelector} from 'react-redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {List} from 'immutable';
+//import {useSelector} from 'react-redux';
 import {
   Table,
   Container,
@@ -10,16 +13,15 @@ import {
   Button
 } from 'react-bootstrap';
 import history from '../../history';
-import {assetselector} from '../../features/asset';
+//import {assetselector} from '../../features/asset';
 
-const AssetList = () => {
+const AssetList = (props) => {
 
   const gotoCreate =()=>{
     history.push("/asset-create");
   };
   const renderTableData=()=> {
-    const  assets = useSelector(assetselector.getAssets);
-    return assets.map((asset, index) => {
+    return props.assets.map((asset, index) => {
       const {id, description, assetNumber, serial, status} = asset;
       return (
         <tr key={index}>
@@ -64,4 +66,13 @@ const AssetList = () => {
     );
   }
 
-export default withRouter(AssetList);
+
+  function mapStateToProps(state) {
+    return { assets:state.as.get("assets") || List() }
+  }
+  
+  AssetList.propTypes = {
+    assets:  PropTypes.any,
+  };
+  
+export default connect(mapStateToProps)( withRouter(AssetList))

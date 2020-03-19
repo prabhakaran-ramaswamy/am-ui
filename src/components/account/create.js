@@ -1,66 +1,55 @@
-import React , {useCallback} from 'react';
-import { useFormik } from 'formik';
-import {useSelector, useDispatch} from 'react-redux';
-import * as Yup from 'yup';
+import React  from 'react';
+//import React , {useCallback} from 'react';
+//import { useFormik} from 'formik';
+//import { useDispatch} from 'react-redux';
 import {  withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   Container,
   Row,
   Col
 } from 'react-bootstrap';
 import history from '../../history';
-import {accountActionTypes, accountselector} from '../../features/account';
+//import {accountActionTypes} from '../../features/account';
+import {makeAccountCreate} from '../../http/http_data'
+//import { accountValidationSchema } from '../helper/validator'
 
-const UserCreate = () => {
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
-
-  const initialVal = useSelector(accountselector.getAccount);
-
-  const dispatch = useDispatch();
-
-  const handleCancel = useCallback(() => {
-    dispatch({
-      type: accountActionTypes.LIST_ACCOUNT_STARTED,
-    });
+class UserCreate extends React.Component {
+  
+  constructor(props){
+    super(props);
+    this.onSubmit=this.onSubmit.bind(this);
+    this.myChangeHandler=this.myChangeHandler.bind(this);
+  }
+ 
+  handleCancel () {
     history.push("/users");
-  }, [dispatch]);
+  }
+  
+  myChangeHandler(event){
+    const target = event.target;
+    this.props.updateAccountValues({name: target.name, value : target.value});
+  }
 
-  const formik = useFormik({
-    initialValues: initialVal,
-    validationSchema: Yup.object({
-      firstName: Yup.string()
-        .min(3, 'Must be 3 characters or greater')
-        .max(30, 'Must be 30 characters or less')
-        .required('First Name value Required'),
-      lastName: Yup.string()
-        .min(3, 'Must be 3 characters or greater')
-        .max(30, 'Must be 30 characters or less')
-        .required('Last Name value Required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('email value Required'),
-      mobile: Yup.string()
-        .matches(phoneRegExp, 'Phone number is not valid')
-        .required('Mobile value Required'),
-    }),
-    onSubmit: values => {
-      console.log(JSON.stringify(values, null, 2));
-    },
-  });
+  onSubmit(){
+      console.log("onSubmit start");
+      console.log(this.props.account);
+      this.props.makeAccountCreate(this.props.account);
+      console.log("onSubmit completed ");
+    }
+  render()
+  {
   return (
     <Container>
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={e => {e.preventDefault();}}>
       <Row>
       <Col></Col>
       <Col>
       <Row>
       <Col><label htmlFor="firstName">First Name</label></Col>
       <Col>
-      <input name="firstName" {...formik.getFieldProps('firstName')} />
-      {formik.touched.firstName && formik.errors.firstName ? (
-        <div style={{color:'red'}}>{formik.errors.firstName}</div>
-      ) : null}
+      <input type="text" name="firstName" value= {this.props.account.firstName} onChange={this.myChangeHandler}/>
       </Col>
       </Row>
       </Col>
@@ -72,10 +61,7 @@ const UserCreate = () => {
       <Row>
       <Col><label htmlFor="lastName">Last Name</label></Col>
       <Col>
-      <input name="lastName" {...formik.getFieldProps('lastName')} />
-      {formik.touched.lastName && formik.errors.lastName ? (
-        <div style={{color:'red'}}>{formik.errors.lastName}</div>
-      ) : null}
+      <input type="text" name="lastName"  value= {this.props.account.lastName} onChange={this.myChangeHandler}/>
       </Col>
       </Row>
       </Col>
@@ -87,10 +73,7 @@ const UserCreate = () => {
       <Row>
       <Col><label htmlFor="email">Email Address</label></Col>
       <Col>
-      <input name="email" {...formik.getFieldProps('email')} />
-      {formik.touched.email && formik.errors.email ? (
-        <div style={{color:'red'}}>{formik.errors.email}</div>
-      ) : null}
+      <input type="text" name="email" value= {this.props.account.email} onChange={this.myChangeHandler}/>
       </Col>
       </Row>
       </Col>
@@ -102,10 +85,7 @@ const UserCreate = () => {
       <Row>
       <Col> <label htmlFor="mobile">Mobile Number</label></Col>
       <Col>
-      <input name="mobile" {...formik.getFieldProps('mobile')} />
-      {formik.touched.mobile && formik.errors.mobile ? (
-        <div style={{color:'red'}}>{formik.errors.mobile}</div>
-      ) : null}
+      <input type="text" name="mobile" value= {this.props.account.mobile} onChange={this.myChangeHandler}/>
       </Col>
       </Row>
       </Col>
@@ -116,16 +96,35 @@ const UserCreate = () => {
       <Col>
       <Row className="justify-content-md-center">
       <Col md="auto">
-      <button type="button" className="mr-2" onClick={handleCancel}>Cancel</button>
-      <button type="submit" >Submit</button>
+      <button type="button" className="mr-2" onClick={this.handleCancel}>Cancel</button>
+      <button type="button" onClick={this.onSubmit} >Submit</button>
       </Col>
       </Row>
       </Col>
       <Col></Col>
       </Row>
-    </form>
+      </form>
     </Container>
   );
+  }
+}
+
+function mapStateToProps(state) {
+  return { account:state.acc.get("account") }
+}
+
+UserCreate.propTypes = {
+  account:  PropTypes.any,
+  updateAccountValues:PropTypes.func.isRequired,
+  makeAccountCreate:PropTypes.func.isRequired
 };
 
-export default withRouter(UserCreate);
+const mapDispatchToProps = dispatch => {
+  return {
+    makeAccountCreate:(value) => makeAccountCreate(value),
+    updateAccountValues: (values) => dispatch({payload:values , type: 'UPDATE_ACCOUNT_VALUES' }),
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(UserCreate))
+

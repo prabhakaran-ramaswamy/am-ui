@@ -1,8 +1,7 @@
-import {CREATE_ACCOUNT_COMPLETED, UPDATE_ACCOUNT_STARTED, DELETE_ACCOUNT_STARTED, VIEW_ACCOUNT_STARTED, LIST_ACCOUNT_COMPLETED , LIST_ACCOUNT_ERROR} from './actionTypes';
+import {UPDATE_ACCOUNT_VALUES,CREATE_ACCOUNT_COMPLETED, UPDATE_ACCOUNT_STARTED, DELETE_ACCOUNT_STARTED, VIEW_ACCOUNT_STARTED, LIST_ACCOUNT_COMPLETED , LIST_ACCOUNT_ERROR} from './actionTypes';
 import {accountsInitialState} from "../../http/initial-states";
 
 export const accountReducer=(state = accountsInitialState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case CREATE_ACCOUNT_COMPLETED:
       return state;
@@ -18,6 +17,9 @@ export const accountReducer=(state = accountsInitialState, action) => {
     case LIST_ACCOUNT_ERROR:
       console.log(action.payload);
       return state;
+      case UPDATE_ACCOUNT_VALUES:
+        state = state.setIn(['account',action.payload.name],action.payload.value);
+        return state;
     default:
       return state;
   }

@@ -1,7 +1,9 @@
 import React from 'react';
 import {  withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-//import {List} from 'immutable';
+import PropTypes from 'prop-types';
+import {List} from 'immutable';
+//import {useSelector} from 'react-redux';
 import {
   Table,
   Container,
@@ -12,17 +14,16 @@ import {
 } from 'react-bootstrap';
 import history from '../../history';
 //import {accountselector} from '../../features/account';
-class UserList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.renderTableData = this.renderTableData.bind(this);
-  }
-  gotoCreate(){
+
+const UserList = (props) => {
+     
+  const gotoCreate = ()=>{
     history.push("/user-create");
-  }
+  };
   
-  renderTableData(){
-    return  this.props.accounts.map((user, index) => {
+  const renderTableData = ()=>{
+    
+    return props.accounts.map((user, index) => {
       const {id, firstName, lastName, email, mobile} = user;
       return (
         <tr key={index}>
@@ -35,14 +36,14 @@ class UserList extends React.Component {
         </tr>
       );
     });
-  }
+  };
 
-  render() {
+  
     return (
       <Container>
          <Container>
         <ButtonToolbar>
-  <Button variant="secondary" onClick={this.gotoCreate}>Create</Button>
+  <Button variant="secondary" onClick={gotoCreate}>Create</Button>
   
 </ButtonToolbar>
 </Container>
@@ -63,21 +64,19 @@ class UserList extends React.Component {
               <th>mobile</th>
             </tr>
           </thead>
-          <tbody>{this.renderTableData()}</tbody>
+          <tbody>{renderTableData()}</tbody>
         </Table>
       </Container>
       </Container>
     );
 }
-}
-function mapStateToProps() {
-  const listOfAccounts = [];
-        return { 
-            accounts: [] 
-        }
-  }
 
-export default connect(
-  mapStateToProps,
-  null
-)( withRouter(UserList))
+  function mapStateToProps(state) {
+    return { accounts:state.acc.get("accounts") || List() }
+  }
+  
+  UserList.propTypes = {
+    accounts:  PropTypes.any,
+  };
+  
+export default connect(mapStateToProps)( withRouter(UserList))
